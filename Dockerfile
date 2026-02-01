@@ -9,6 +9,7 @@ COPY app/ ./app/
 
 # Railway sets PORT env var; default to 8000 for local development
 ENV PORT=8000
-EXPOSE $PORT
+EXPOSE 8000
 
-CMD uvicorn app.main:app --host 0.0.0.0 --port $PORT
+# Use shell form to ensure $PORT is expanded at runtime
+CMD ["/bin/sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"]
